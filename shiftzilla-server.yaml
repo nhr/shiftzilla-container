@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shiftzilla-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shiftzilla-server
+  template:
+    metadata:
+      labels:
+        app: shiftzilla-server
+    spec:
+      containers:
+      - name: server
+        image: registry.access.redhat.com/rhscl/httpd-24-rhel7
+        volumeMounts:
+        - name: shiftzilla-files
+          mountPath: /opt/rh/httpd24/root/var/www/html
+          subPath: www
+      volumes:
+      - name: shiftzilla-files
+        persistentVolumeClaim:
+          claimName: shiftzilla-state
+
