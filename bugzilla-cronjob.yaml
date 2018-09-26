@@ -24,6 +24,8 @@ spec:
                     key: password
               - name: HOME
                 value: /bugzilla
+              - name: TZ
+                value: America/New_York
             args:
               - /bin/bash
               - -c
