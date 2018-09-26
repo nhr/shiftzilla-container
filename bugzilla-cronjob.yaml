@@ -1,0 +1,38 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: bugzilla-authenticate
+spec:
+  schedule: "* * * * 0"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: shiftzilla
+            image: docker-registry.default.svc:5000/shiftzilla/shiftzilla
+            env:
+              - name: SECRET_USERNAME
+                valueFrom:
+                  secretKeyRef:
+                    name: bugzilla-login
+                    key: username
+              - name: SECRET_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: bugzilla-login
+                    key: password
+              - name: HOME
+                value: /bugzilla
+            args:
+              - /bin/bash
+              - -c
+              - /usr/bin/bugzilla $SECRET_USERNAME $SECRET_PASSWORD
+            volumeMounts:
+              - name: bugzilla-login
+                mountPath: /bugzilla
+          restartPolicy: OnFailure
+          volumes:
+            - name: bugzilla-login
+              persistentVolumeClaim:
+                claimName: bugzilla-state

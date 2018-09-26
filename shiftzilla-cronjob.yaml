@@ -1,0 +1,38 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: shiftzilla-build
+spec:
+  schedule: "0 3-21 * * 1-5"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: shiftzilla
+            image: docker-registry.default.svc:5000/shiftzilla/shiftzilla
+            env:
+              - name: HOME
+                value: /bugzilla
+            args:
+              - /bin/bash
+              - -c
+              - "/usr/local/bin/shiftzilla load -c /shiftzilla/config/shiftzilla_cfg.yaml -d /shiftzilla/storage/shiftzilla.sqlite -a /shiftzilla/storage/archive -p && /usr/local/bin/shiftzilla build -c /shiftzilla/config/shiftzilla_cfg.yaml -d /shiftzilla/storage/shiftzilla.sqlite -q"
+            volumeMounts:
+              - name: bugzilla-login
+                mountPath: /bugzilla
+              - name: shiftzilla-storage
+                mountPath: /shiftzilla/storage
+              - name: shiftzilla-cfg
+                mountPath: /shiftzilla/config
+          restartPolicy: OnFailure
+          volumes:
+            - name: bugzilla-login
+              persistentVolumeClaim:
+                claimName: bugzilla-state
+            - name: shiftzilla-storage
+              persistentVolumeClaim:
+                claimName: shiftzilla-state
+            - name: shiftzilla-cfg
+              configMap:
+                name: shiftzilla-config
