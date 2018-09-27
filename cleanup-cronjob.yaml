@@ -1,0 +1,25 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: cleanup
+spec:
+  schedule: "0 6 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: shiftzilla
+            image: docker-registry.default.svc:5000/shiftzilla/shiftzilla
+            args:
+              - /bin/bash
+              - -c
+              - "/usr/bin/find /shiftzilla/storage/archive/* -type d | sort | head -n -3 | xargs rm -rf"
+            volumeMounts:
+              - name: shiftzilla-storage
+                mountPath: /shiftzilla/storage
+          restartPolicy: OnFailure
+          volumes:
+            - name: shiftzilla-storage
+              persistentVolumeClaim:
+                claimName: shiftzilla-state

@@ -1,0 +1,6 @@
+apiVersion: v1
+data:
+  shiftzilla_cfg.yaml: "< See https://github.com/nhr/shiftzilla/blob/master/shiftzilla_cfg.yml.tmpl for an example config >"
+kind: ConfigMap
+metadata:
+  name: shiftzilla-config
