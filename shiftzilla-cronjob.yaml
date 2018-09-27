@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: shiftzilla-build
 spec:
-  schedule: "0 3-21 * * 1-5"
+  schedule: "0 0-1,7-23 * * 1-6"
   jobTemplate:
     spec:
       template:

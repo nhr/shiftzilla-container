@@ -1,0 +1,29 @@
+apiVersion: build.openshift.io/v1
+kind: Build
+metadata:
+  labels:
+    build: shiftzilla
+    buildconfig: shiftzilla
+    openshift.io/build-config.name: shiftzilla
+    openshift.io/build.start-policy: Serial
+  name: shiftzilla-1
+  namespace: shiftzilla
+spec:
+  serviceAccount: builder
+  source:
+    dockerfile: |
+      FROM fedora
+      LABEL maintainer="N. Harrison Ripps <nhr@redhat.com>"
+
+      # Install build requirements
+      RUN dnf install -y ruby python sqlite sqlite-devel ruby-devel gcc-c++ make redhat-rpm-config rsync
+
+      # Install python-bugzilla
+      RUN pip install python-bugzilla
+
+      # Install shiftzilla
+      RUN gem install shiftzilla
+
+      # Remove build tools
+      RUN dnf remove -y ruby-devel gcc-c++ make sqlite-devel
+    type: Dockerfile
