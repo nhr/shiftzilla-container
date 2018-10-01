@@ -4,6 +4,7 @@ metadata:
   name: bugzilla-authenticate
 spec:
   schedule: "* * * * 0"
+  concurrencyPolicy: Replace
   jobTemplate:
     spec:
       template:

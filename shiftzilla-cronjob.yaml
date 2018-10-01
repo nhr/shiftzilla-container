@@ -4,6 +4,7 @@ metadata:
   name: shiftzilla-build
 spec:
   schedule: "0 0-1,7-23 * * 1-6"
+  concurrencyPolicy: Replace
   jobTemplate:
     spec:
       template:
