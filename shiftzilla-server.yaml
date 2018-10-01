@@ -14,16 +14,18 @@ spec:
     spec:
       containers:
       - name: server
-        image: docker-registry.default.svc:5000/shiftzilla/shiftzilla
-        args:
-          - /usr/bin/ruby
-          - -run
-          - -e
-          - httpd
-          - /shiftzilla/storage/www
+        image: registry.access.redhat.com/rhscl/httpd-24-rhel7
+        resources:
+          limits:
+            cpu: 1
+            memory: 1Gi
+          requests:
+            cpu: 500m
+            memory: 500Mi
         volumeMounts:
         - name: shiftzilla-files
-          mountPath: /shiftzilla/storage
+          mountPath: /opt/rh/httpd24/root/var/www/html
+          subPath: www
       volumes:
       - name: shiftzilla-files
         persistentVolumeClaim:

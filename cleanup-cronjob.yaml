@@ -4,6 +4,7 @@ metadata:
   name: cleanup
 spec:
   schedule: "0 6 * * *"
+  concurrencyPolicy: Replace
   jobTemplate:
     spec:
       template:
