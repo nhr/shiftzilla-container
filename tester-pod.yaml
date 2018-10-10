@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    name: tester
+spec:
+  containers:
+  - name: tester
+    image: quay.io/nhripps/shiftzilla
+    args:
+    - /bin/bash
+    - -c
+    - "sleep 999999h"
+    volumeMounts:
+    - name: bz-stuff
+      mountPath: /bugzilla-state
+    - name: sz-stuff
+      mountPath: /shiftzilla-state
+  volumes:
+  - name: bz-stuff
+    persistentVolumeClaim:
+      claimName: bugzilla-state
+  - name: sz-stuff
+    persistentVolumeClaim:
+      claimName: shiftzilla-state
