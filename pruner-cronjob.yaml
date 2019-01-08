@@ -1,0 +1,26 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: cleanup
+spec:
+  schedule: "0 3 * * *"
+  concurrencyPolicy: Replace
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: shiftzilla
+            image: docker-registry.default.svc:5000/shiftzilla/shiftzilla
+            args:
+              - /bin/bash
+              - -c
+              - "sqlite3 shiftzilla.sqlite -echo \"DELETE FROM ALL_BUGS WHERE Snapshot < date('now','localtime','-180 days');VACUUM;\""
+            volumeMounts:
+              - name: shiftzilla-storage
+                mountPath: /shiftzilla/storage
+          restartPolicy: OnFailure
+          volumes:
+            - name: shiftzilla-storage
+              persistentVolumeClaim:
+                claimName: shiftzilla-state
