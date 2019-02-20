@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: bugzilla-authenticate
 spec:
-  schedule: "30 6 * * 0"
+  schedule: "30 6 * * *"
   concurrencyPolicy: Replace
   jobTemplate:
     spec:
