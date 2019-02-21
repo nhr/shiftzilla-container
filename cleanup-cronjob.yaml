@@ -15,7 +15,7 @@ spec:
             args:
               - /bin/bash
               - -c
-              - "/usr/bin/find /shiftzilla/storage/archive/* -type d | sort | head -n -3 | xargs rm -rf"
+              - "/usr/bin/find /shiftzilla/storage/archive/* -type d | sort | head -n -3 | xargs rm -rf; sqlite3 /shiftzilla/storage/shiftzilla.sqlite -echo \"DELETE FROM ALL_BUGS WHERE Snapshot < date('now','localtime','-180 days');VACUUM;\""
             volumeMounts:
               - name: shiftzilla-storage
                 mountPath: /shiftzilla/storage
