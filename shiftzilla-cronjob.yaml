@@ -20,7 +20,7 @@ spec:
             args:
               - /bin/bash
               - -c
-              - "/usr/local/bin/shiftzilla load -c /shiftzilla/config/shiftzilla_cfg.yaml -d /shiftzilla/storage/shiftzilla.sqlite -a /shiftzilla/storage/archive -p && /usr/local/bin/shiftzilla build -c /shiftzilla/config/shiftzilla_cfg.yaml -d /shiftzilla/storage/shiftzilla.sqlite -q"
+              - "/usr/local/bin/shiftzilla load -c /shiftzilla/config/shiftzilla_cfg.yaml -d /shiftzilla/storage/shiftzilla.sqlite -a /shiftzilla/storage/archive -p && /usr/local/bin/shiftzilla build -c /shiftzilla/config/shiftzilla_cfg.yaml -d /shiftzilla/storage/shiftzilla.sqlite -q --groups"
             volumeMounts:
               - name: bugzilla-login
                 mountPath: /bugzilla
