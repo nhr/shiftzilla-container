@@ -8,7 +8,8 @@ metadata:
   name: shiftzilla-state
 spec:
   accessModes:
-  - ReadWriteMany
+  - ReadWriteOnce
   resources:
     requests:
       storage: 2Gi
+  storageClassName: ceph-dyn-common-nvme

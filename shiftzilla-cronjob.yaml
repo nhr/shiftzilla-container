@@ -26,6 +26,7 @@ spec:
                 mountPath: /bugzilla
               - name: shiftzilla-storage
                 mountPath: /shiftzilla/storage
+                readOnly: false
               - name: shiftzilla-cfg
                 mountPath: /shiftzilla/config
           restartPolicy: OnFailure
