@@ -11,4 +11,5 @@ RUN pip install python-bugzilla
 RUN gem install shiftzilla
 
 # Remove build tools
-RUN dnf remove -y ruby-devel gcc-c++ make sqlite-devel
+# Commenting out because this now removes python2
+#RUN dnf remove -y ruby-devel gcc-c++ make sqlite-devel

@@ -19,6 +19,7 @@ spec:
             volumeMounts:
               - name: shiftzilla-storage
                 mountPath: /shiftzilla/storage
+                readOnly: false
           restartPolicy: OnFailure
           volumes:
             - name: shiftzilla-storage

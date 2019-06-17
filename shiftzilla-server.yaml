@@ -47,8 +47,8 @@ spec:
         - name: shiftzilla-files
           mountPath: /opt/rh/httpd24/root/var/www/html
           subPath: www
+          readOnly: true
       volumes:
       - name: shiftzilla-files
         persistentVolumeClaim:
-          claimName: shiftzilla-state
-
+          claimName: bugzilla-state

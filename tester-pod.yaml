@@ -15,6 +15,7 @@ spec:
       mountPath: /bugzilla-state
     - name: sz-stuff
       mountPath: /shiftzilla-state
+      readOnly: false
   volumes:
   - name: bz-stuff
     persistentVolumeClaim:
