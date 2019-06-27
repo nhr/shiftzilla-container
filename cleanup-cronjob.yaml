@@ -24,4 +24,4 @@ spec:
           volumes:
             - name: shiftzilla-storage
               persistentVolumeClaim:
-                claimName: shiftzilla-state
+                claimName: shiftzilla-state-nfs

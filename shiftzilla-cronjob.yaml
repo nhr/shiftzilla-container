@@ -36,7 +36,7 @@ spec:
                 claimName: bugzilla-state
             - name: shiftzilla-storage
               persistentVolumeClaim:
-                claimName: shiftzilla-state
+                claimName: shiftzilla-state-nfs
             - name: shiftzilla-cfg
               configMap:
                 name: shiftzilla-config
